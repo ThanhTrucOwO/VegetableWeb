@@ -87,11 +87,9 @@ public class VegetableController {
 //        return "shop";
 //    }
     @GetMapping("/shop/search")
-    public String getVegetableByCategory(Model m, @RequestParam(required = false) String IdCategory, @RequestParam(required = false) String keyword) {
+    public String SearchProduct(Model m, @RequestParam(required = false) String IdCategory, @RequestParam(required = false) String keyword) {
         Iterable<Vegetable> list = null;
         if (IdCategory != null && !IdCategory.isEmpty()) {
-            System.out.println(IdCategory);
-            System.out.println(keyword);
             list = vegetableRepository.getVegetableByCategoryAndNameforSearching(IdCategory, keyword);
         } else if (keyword != null && !keyword.isEmpty()) {
             list = vegetableRepository.getVegetableByNameforSearching(keyword);

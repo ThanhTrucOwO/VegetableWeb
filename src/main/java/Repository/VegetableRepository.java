@@ -17,10 +17,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VegetableRepository extends CrudRepository<Vegetable, Integer> {
 
-    @Query(value = "select * from vegetable v, category c where "
-            + "c.CatagoryID = v.CatagoryID", nativeQuery = true)
-    Iterable<Vegetable> getVegetables();
-
     @Query(value = "SELECT Vegetable.*, Category.Name FROM Vegetable INNER JOIN Category ON Vegetable.CatagoryID = Category.CatagoryID WHERE Vegetable.CatagoryID = ?1", nativeQuery = true)
     Iterable<Vegetable> getVegetablesByCategory(String id);
 
