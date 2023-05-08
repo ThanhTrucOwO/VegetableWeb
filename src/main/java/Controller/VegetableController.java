@@ -69,10 +69,35 @@ public class VegetableController {
         m.addAttribute("dataVegetable", listvege);
         return "bestselling";
     }
-    
+
+//    @GetMapping("/shop/search")
+//    public String SearchProduct(Model m, String keyword) {
+//        Iterable<Vegetable> list = vegetableRepository.getVegetableByNameforSearching(keyword);
+//        Iterable<Category> listCate = categoryRepository.findAll();
+//        m.addAttribute("dataCategory", listCate);
+//        m.addAttribute("dataVegetable", list);
+//        return "shop";
+//    }
+//    @GetMapping("/shop/search")
+//    public String SearchProductbyCategory(Model m, String id, String keyword) {
+//        Iterable<Vegetable> list = vegetableRepository.getVegetableByCategoryAndNameforSearching(id, keyword);
+//        Iterable<Category> listCate = categoryRepository.findAll();
+//        m.addAttribute("dataCategory", listCate);
+//        m.addAttribute("dataVegetable", list);
+//        return "shop";
+//    }
     @GetMapping("/shop/search")
-    public String SearchProduct(Model m, String keyword) {
-        Iterable<Vegetable> list = vegetableRepository.getVegetableByNameforSearching(keyword);
+    public String getVegetableByCategory(Model m, @RequestParam(required = false) String IdCategory, @RequestParam(required = false) String keyword) {
+        Iterable<Vegetable> list = null;
+        if (IdCategory != null && !IdCategory.isEmpty()) {
+            System.out.println(IdCategory);
+            System.out.println(keyword);
+            list = vegetableRepository.getVegetableByCategoryAndNameforSearching(IdCategory, keyword);
+        } else if (keyword != null && !keyword.isEmpty()) {
+            list = vegetableRepository.getVegetableByNameforSearching(keyword);
+        } else {
+            list = vegetableRepository.findAll();
+        }
         Iterable<Category> listCate = categoryRepository.findAll();
         m.addAttribute("dataCategory", listCate);
         m.addAttribute("dataVegetable", list);

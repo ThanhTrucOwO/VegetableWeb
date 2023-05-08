@@ -71,6 +71,16 @@
               <div>
                 <form action="/shop/search" method="get">
                   <div class="input-group filter-bar-search">
+                    <select name="IdCategory">
+                      <option value="">Tất cả sản phẩm</option>
+                      <th:block th:each="category : ${dataCategory}">
+                        <option
+                          th:value="${category.CatagoryID}"
+                          th:selected="${category.CatagoryID == IdCategory}"
+                          th:text="${category.Name}"
+                        ></option>
+                      </th:block>
+                    </select>
                     <input
                       name="keyword"
                       type="text"
