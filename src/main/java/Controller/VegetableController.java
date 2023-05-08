@@ -4,12 +4,14 @@
  */
 package Controller;
 
+import Entities.CartDetail;
 import org.springframework.stereotype.Controller;
 import Entities.Category;
 import Entities.Vegetable;
 import Repository.CartDetailRepository;
 import Repository.CategoryRepository;
 import Repository.VegetableRepository;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class VegetableController {
+
     @Autowired
     private VegetableRepository vegetableRepository;
     @Autowired
@@ -36,7 +39,7 @@ public class VegetableController {
         m.addAttribute("dataCategory", listCategory);
         return "shop";
     }
-    
+
     @GetMapping("/shop/category")
     public String getVegetableByCategory(Model m, @RequestParam(required = false) String IdCategory) {
         Iterable<Vegetable> list = vegetableRepository.getVegetablesByCategory(IdCategory);
@@ -45,7 +48,7 @@ public class VegetableController {
         m.addAttribute("dataVegetable", list);
         return "shop";
     }
-    
+
     @GetMapping("/shop/product")
     public String getVegetableByID(Model m, @RequestParam(required = false) String IdProduct) {
         Vegetable v = vegetableRepository.getVegetableByID(IdProduct);
@@ -53,5 +56,26 @@ public class VegetableController {
         m.addAttribute("dataCategory", listCategory);
         m.addAttribute("dataVegetable", v);
         return "product";
+    }
+
+    @GetMapping("/bestselling")
+    public String getVegetableByOrderdetail(Model m, @RequestParam(required = false) String idProduct) {
+        ArrayList<CartDetail> list = cartDetailRepository.getVegetableByOrderDetail();
+        ArrayList<Vegetable> listvege = new ArrayList<>();
+        for (int i = 0; i < list.size() - 3; i++) {
+            Vegetable veg = vegetableRepository.getVegetableByID(list.get(i).getVegetableID().toString());
+            listvege.add(veg);
+        }
+        m.addAttribute("dataVegetable", listvege);
+        return "bestselling";
+    }
+    
+    @GetMapping("/shop/search")
+    public String SearchProduct(Model m, String keyword) {
+        Iterable<Vegetable> list = vegetableRepository.getVegetableByNameforSearching(keyword);
+        Iterable<Category> listCate = categoryRepository.findAll();
+        m.addAttribute("dataCategory", listCate);
+        m.addAttribute("dataVegetable", list);
+        return "shop";
     }
 }

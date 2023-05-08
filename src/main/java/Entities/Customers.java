@@ -17,19 +17,20 @@ import lombok.Data;
  * @author kusod
  */
 @Data
-@Entity(name = "orderdetail")
-@Table(name = "orderdetail")
-public class CartDetail {
-     @Id
+@Entity(name = "customers")
+@Table(name = "customers")
+public class Customers {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-     private Integer stt;
+    private Integer CustomerID;
     @Column
-    private Integer OrderID;
+    private String Username;
     @Column
-    private Integer VegetableID;
+    private String Fullname;
+    @Column(name = "Password")
+    private String Password;
     @Column
-    private Integer Quantity;
+    private String Address;
     @Column
-    private Float Price;
-
+    private String City;
 }

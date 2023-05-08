@@ -34,7 +34,7 @@
         <div class="row">
           <div class="col-xl-3 col-lg-4 col-md-5">
             <div class="sidebar-categories">
-              <div class="head">Browse Categories</div>
+              <div class="head">Best Selling</div>
               <ul class="main-categories">
                 <li class="common-filter">
                   <form action="#">
@@ -69,19 +69,12 @@
                 </select>
               </div>
               <div>
-                <form action="/shop/search" method="get">
-                  <div class="input-group filter-bar-search">
-                    <input
-                      name="keyword"
-                      type="text"
-                      th:value="${keyword}"
-                      placeholder="Search"
-                    />
-                    <div class="input-group-append">
-                      <button type="submit"><i class="ti-search"></i></button>
-                    </div>
+                <div class="input-group filter-bar-search">
+                  <input type="text" placeholder="Search" />
+                  <div class="input-group-append">
+                    <button type="button"><i class="ti-search"></i></button>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
             <!-- End Filter Bar -->

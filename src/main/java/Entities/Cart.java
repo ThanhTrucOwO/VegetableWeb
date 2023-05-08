@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.Date;
 import lombok.Data;
 
 /**
@@ -17,19 +18,18 @@ import lombok.Data;
  * @author kusod
  */
 @Data
-@Entity(name = "orderdetail")
-@Table(name = "orderdetail")
-public class CartDetail {
-     @Id
+@Entity(name = "order")
+@Table(name = "order")
+public class Cart {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-     private Integer stt;
-    @Column
     private Integer OrderID;
     @Column
-    private Integer VegetableID;
+    private Integer CustomerID;
     @Column
-    private Integer Quantity;
+    private Date Date;
     @Column
-    private Float Price;
-
+    private Float Total;
+    @Column
+    private String Note;
 }

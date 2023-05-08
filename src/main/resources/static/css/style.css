@@ -3242,6 +3242,44 @@ a {
 .instagram_image a:hover img {
   transform: scale(1.05);
 }
+.proceed-checkout ul {
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 16px;
+  padding-bottom: 20px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(235, 235, 235);
+  border-image: initial;
+  background: rgb(243, 243, 243);
+}
+.proceed-checkout ul li.cart-total {
+  padding-top: 10px;
+}
+.proceed-checkout ul li span {
+  float: right;
+}
+.proceed-checkout ul li {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgb(37, 37, 37);
+  text-transform: uppercase;
+  list-style: none;
+  overflow: hidden;
+}
+.proceed-checkout ul li.cart-total span {
+  color: #384aeb;
+}
+.proceed-checkout .proceed-btn {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgb(255, 255, 255);
+  text-transform: uppercase;
+  display: block;
+  text-align: center;
+  background: rgb(37, 37, 37);
+  padding: 15px 25px 14px;
+}
 @media (max-width: 991px) {
   .instagram_image {
     margin-bottom: 120px !important;
@@ -3280,6 +3318,8 @@ a {
   border-bottom: 0px !important;
 }
 .cart_inner .table tbody tr td {
+  color: #384aeb;
+  font-weight: 700;
   padding-top: 30px;
   padding-bottom: 30px;
   vertical-align: middle;
@@ -3290,6 +3330,21 @@ a {
 }
 .cart_inner .table tbody tr td .media .d-flex img {
   border-radius: 3px;
+}
+.cart-table table tr td.qua-col .quantity {
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+.cart-table table tr td.qua-col .pro-qty {
+  width: 123px;
+  height: 46px;
+  float: left;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(235, 235, 235);
+  border-image: initial;
+  padding: 0px 15px;
 }
 @media (max-width: 600px) {
   .cart_inner .table tbody tr td .media .d-flex img {
@@ -3361,6 +3416,38 @@ a {
 }
 .cart_inner .table tbody tr.bottom_button td .cupon_text {
   margin-left: -429px;
+}
+.order-btn .place-btn {
+  padding: 13px 40px 11px;
+  border-color: #000000;
+}
+.order-btn {
+  text-align: center;
+}
+.order-table li.fw-normal {
+  font-weight: 400;
+  text-transform: capitalize;
+}
+.order_box .list li:first-child {
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 20px;
+  padding-top: 0;
+}
+.order_box .list li span {
+  float: right;
+}
+.order_box .list li.total-price span {
+  color: #384aeb;
+}
+.order_box .list li {
+  list-style: none;
+  color: #252525;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 5px;
+  padding-top: 30px;
 }
 @media (min-width: 991px) {
   .cart_inner .table tbody tr.bottom_button td .cupon_text {
