@@ -18,11 +18,14 @@ import java.util.Date;
 import java.util.StringTokenizer;
 import org.apache.tomcat.util.json.JSONParser;
 import org.apache.tomcat.util.json.ParseException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -48,49 +51,29 @@ public class CartController {
         return "checkout";
     }
 
-    @PostMapping("/checkout")
-    @ResponseBody
-    public String addCart(HttpSession session, HttpServletRequest request) throws ParseException, NoSuchFieldException {
+    @PostMapping("/checkout/add")
+    public void addCart(HttpSession session, @RequestBody String payload) throws ParseException, NoSuchFieldException {
         int userId = (Integer) session.getAttribute("idUser");
-        String total = request.getParameter("total");
-        String listCarts = request.getParameter("listCarts");
+
+        JSONObject jsonObject = new JSONObject(payload);
 
         Cart newCart = new Cart();
         newCart.setCustomerID(userId);
-        newCart.setNote("Order Test");
-        newCart.setTotal(Float.valueOf(total));
+        newCart.setNote(jsonObject.get("note").toString());
+        newCart.setTotal(Float.valueOf(jsonObject.get("total").toString()));
         newCart.setDate(new Date());
         cartRepository.save(newCart);
 
-        JSONParser jsonParser = new JSONParser(listCarts);
-        ArrayList<Object> newArray = jsonParser.parseArray();
-        for (Object object : newArray) {
-            String item = object.toString();
-            ArrayList<String> getListData = splitString(item);
+        JSONArray array = jsonObject.getJSONArray("carts");
+        for(int i = 0;i < array.length();i++){
+            JSONObject obj = array.getJSONObject(i);
             CartDetail detail = new CartDetail();
             detail.setOrderID(newCart.getOrderID());
-            detail.setVegetableID(Integer.parseInt(getAnswer(getListData.get(0))));
-            detail.setQuantity(Integer.parseInt(getAnswer(getListData.get(3))));
-            detail.setPrice(Float.parseFloat(getAnswer(getListData.get(3))) * Float.parseFloat(getAnswer(getListData.get(4))));
+            detail.setVegetableID(Integer.parseInt(obj.get("id").toString()));
+            detail.setQuantity(Integer.parseInt(obj.get("quantity").toString()));
+            detail.setPrice(Float.parseFloat(obj.get("price").toString()) * Float.parseFloat(obj.get("quantity").toString()));
             cartDetailRepository.save(detail);
         }
-        return "home";
-    }
-
-    public ArrayList<String> splitString(String input) {
-        ArrayList<String> result = new ArrayList<String>();
-        String newString = input.replaceAll("[{}]", "");
-        StringTokenizer tokens = new StringTokenizer(newString, ",");
-        while (tokens.hasMoreTokens()) {
-            String token = tokens.nextToken();
-            result.add(token);
-        }
-        return result;
-    }
-
-    public String getAnswer(String input) {
-        String[] data = input.split("=");
-        return data[1];
     }
 
     @GetMapping("/cart")

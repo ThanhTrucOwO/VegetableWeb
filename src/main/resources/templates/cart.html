@@ -310,17 +310,13 @@
                     <td class="qua-col first-row">
                         <div class="quantity">
                             <div class="pro-qty" id="pro-qty-cart" >
-                                <span class="dec qtybtn">-</span>
-                                <input id="input-qty-cart" type="text" value="${
+                                <input class="input-qty-cart" type="number" value="${
                                   cart.quantity
-                                }" min="1" data-rowid="${cart.id}">
-                                <span class="inc qtybtn" onclick="plus(${
-                                  cart.id
-                                })">+</span>
+                                }" min="1" data-rowid="${cart.id}" onchange="handleChangeInput(this, ${cart.id}, ${cart.price})">
                             </div>
                         </div>
                     </td>
-                    <td class="total-price first-row">$${
+                    <td class="total-price first-row" data-rowid="${cart.id}">$${
                       cart.price * cart.quantity
                     }.00</td>           
                 </tr>`
@@ -328,6 +324,28 @@
       })
     }
     $('.totalPrice').text(`$${total.toFixed(2)}`)
+
+    function handleChangeInput(input, id, price){
+      let quantity = parseInt(input.value || 0)
+      let total = 0
+      carts = carts.map(item => {
+        if(item.id == id){
+          item.quantity = quantity
+        }
+        return item
+      })
+      Array.from(document.querySelectorAll('.total-price')).forEach((item, index) => {
+        if(item.getAttribute("data-rowid") == id){
+          item.textContent =`$${price * quantity}.00`
+        }
+      })
+      carts.forEach(item => {
+        total += item.price * item.quantity
+      })
+
+      $('.totalPrice').text(`$${total.toFixed(2)}`)
+      sessionStorage.setItem("cart", JSON.stringify(carts))
+    }
 
     function destroyCart() {
       sessionStorage.clear()

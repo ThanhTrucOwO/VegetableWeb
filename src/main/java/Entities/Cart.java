@@ -19,7 +19,7 @@ import lombok.Data;
  */
 @Data
 @Entity(name = "order")
-@Table(name = "order")
+@Table(name = "`order`")
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

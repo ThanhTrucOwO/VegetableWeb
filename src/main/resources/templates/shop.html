@@ -109,7 +109,7 @@
                           </button>
                         </li>
                         <li>
-                          <button><i class="ti-shopping-cart"></i></button>
+                          <button th:onclick="addToCart([[${row.VegetableID}]], [[${row.Image}]], [[${row.Vegetable_Name}]], [[${row.Price}]], 1)"><i class="ti-shopping-cart"></i></button>
                         </li>
                         <li>
                           <button><i class="ti-heart"></i></button>
@@ -189,5 +189,36 @@
     <!-- ================ Subscribe section end ================= -->
 
     <footer th:replace="layout :: footer"></footer>
+    <script th:inline="javascript">
+      function addToCart(id, image, productName, price, quantity){
+        var username = /*[[${session.username}]]*/ 'default'
+        if(username) {
+          const product = {
+            id, image, productName, price, quantity
+          }
+          alert(`Đã thêm sản phẩm ${product.productName}`)
+          let cart = JSON.parse(sessionStorage.getItem("cart"))
+          if(cart){
+            let isExist = false
+            cart = cart.map(item => {
+              if(item.id == product.id){
+                item.quantity += product.quantity
+                isExist = true
+              }
+              return item
+            })
+            if(!isExist){
+              cart = [...cart, product]
+            }
+           } else {
+            cart = [product]
+           }
+          sessionStorage.setItem("cart", JSON.stringify(cart))
+        } else {
+          alert("Yêu cầu đăng nhập")
+          location.href = "/login"
+        }
+      }
+    </script>
   </body>
 </html>
